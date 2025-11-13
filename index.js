@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const path = require('node:path')
 const gameRoute = require('./routes/gameRoute')
 
 // Load environment variables
@@ -8,12 +9,15 @@ const gameRoute = require('./routes/gameRoute')
 //express initialization
 const app = express()
 
-//cors initialization
+//cors enabled
 app.use(cors())
 
 //access html body
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
+
+//serve static files from "public/images" directory
+app.use('/images', express.static(path.join(__dirname, 'public/images')))
 
 //routes middleware
 app.use('/api/', gameRoute)
