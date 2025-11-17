@@ -16,17 +16,17 @@ const levels = {
         { name: 'Leon F. Kennedy', xMin: 641, xMax: 695, yMin: 561, yMax: 615 },
         { name: 'Spyro', xMin: 116, xMax: 249, yMin: 425, yMax: 488 },
      ],
-    wii: [ //coordinate still f'ed
-        { name: 'Wii Fit Trainer', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
-        { name: 'Yarn Kirby', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
-        { name: 'Donkey Kong', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
-        { name: 'Rayman', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
+    wii: [
+        { name: 'Wii Fit Trainer', xMin: 196, xMax: 239, yMin: 256, yMax: 333 },
+        { name: 'Donkey Kong', xMin: 630, xMax: 717, yMin: 680, yMax: 732 },
+        { name: 'Rayman', xMin: 616, xMax: 705, yMin: 444, yMax: 496 },
+        { name: 'Yarn Kirby', xMin: 145, xMax: 215, yMin: 544, yMax: 579 },
     ],
     snes: [ //coordinate still f'ed
-        { name: 'Link', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
-        { name: 'Megaman X', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
-        { name: 'Terra Branford', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
-        { name: 'Earthworm Jim', xMin: 744, xMax: 778, yMin: 472, yMax: 532 },
+        { name: 'Link', xMin: 760, xMax: 805, yMin: 449, yMax: 496 },
+        { name: 'Megaman X', xMin: 297, xMax: 365, yMin: 626, yMax: 677 },
+        { name: 'Terra Branford', xMin: 706, xMax: 778, yMin: 719, yMax: 787 },
+        { name: 'Earthworm Jim', xMin: 104, xMax: 184, yMin: 623, yMax: 677 },
     ]
 };
 
