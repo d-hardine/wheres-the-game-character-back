@@ -1,4 +1,5 @@
 const { Router } = require('express')
+const db = require("../db/queries");
 
 const gameRouter = Router()
 
@@ -6,7 +7,7 @@ const gameRouter = Router()
 const levels = {
     ps2: [
         { name: 'Yuna', xMin: 219, xMax: 298, yMin: 421, yMax: 462 },
-        { name: 'James Sunderland', xMin: 327, xMax: 374, yMin: 766, yMax: 820 },
+        { name: 'James Sunderland', xMin: 341, xMax: 388, yMin: 771, yMax: 811 },
         { name: 'Jak and Daxter', xMin: 856, xMax: 943, yMin: 533, yMax: 598 },
         { name: 'Tommy Vercetti', xMin: 677, xMax: 731, yMin: 602, yMax: 645 },
     ],
@@ -51,6 +52,28 @@ gameRouter.get('/names/:consoleName', (req, res) => {
         characterNamesAndFound[i] = {id: i, name: characterNames[i], found: false}
     }
     res.json(characterNamesAndFound)
+})
+
+//fetch leaderboards
+gameRouter.get('/leaderboards/:consoleName', async (req, res) => {
+    const { consoleName } = req.params
+    const leaderboard = await db.getAllNames(consoleName)
+    res.status(201).json(leaderboard)
+})
+
+//fetch the slowest
+gameRouter.get('/slowest/:consoleName', async (req, res) => {
+    const { consoleName } = req.params
+    const slowest = await db.getSlowestName(consoleName)
+    res.json(slowest)
+})
+
+//update leaderboards
+gameRouter.put('/leaderboards/:consoleName', async (req, res) => {
+    const { consoleName } = req.params
+    const { name, time, slowestId } = req.body
+    await db.updateLeaderboard(name, time, slowestId)
+    res.send(`connection "update" established with console name: ${consoleName}, username: ${name}, time: ${time}, the slowest id: ${slowestId}`)
 })
 
 module.exports = gameRouter
