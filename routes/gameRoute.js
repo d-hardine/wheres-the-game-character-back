@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const db = require("../db/queries");
+const allLevels = require('../utils/levelCoordinates')
 
 const gameRouter = Router()
 
@@ -23,7 +24,7 @@ const levels = {
         { name: 'Rayman', xMin: 616, xMax: 705, yMin: 444, yMax: 496 },
         { name: 'Yarn Kirby', xMin: 145, xMax: 215, yMin: 544, yMax: 579 },
     ],
-    snes: [ //coordinate still f'ed
+    snes: [
         { name: 'Link', xMin: 760, xMax: 805, yMin: 449, yMax: 496 },
         { name: 'Megaman X', xMin: 297, xMax: 365, yMin: 626, yMax: 677 },
         { name: 'Terra Branford', xMin: 706, xMax: 778, yMin: 719, yMax: 787 },
@@ -33,8 +34,30 @@ const levels = {
 
 // Route to verify a click
 gameRouter.post('/verify', (req, res) => {
-    const { consoleName, characterName, x, y } = req.body;
-    const character = levels[consoleName].find(c => c.name === characterName);
+    const { consoleName, characterName, x, y, screenWidth } = req.body;
+    let character
+    //const character = levels[consoleName].find(c => c.name === characterName);
+    //console.log(screenWidth)
+    if(screenWidth > 1400) {
+        console.log(`screen is extra extra large at ${screenWidth}px`)
+        character = allLevels.levelsXXL[consoleName].find(c => c.name === characterName);
+    } else if(screenWidth > 1200 && screenWidth <= 1400) {
+        console.log(`screen is extra large at ${screenWidth}px`)
+        character = allLevels.levelsXL[consoleName].find(c => c.name === characterName);
+    } else if(screenWidth > 992 && screenWidth <= 1200) {
+        console.log(`screen is large at ${screenWidth}px`)
+        character = allLevels.levelsLG[consoleName].find(c => c.name === characterName);
+    } else if(screenWidth > 768 && screenWidth <= 992) {
+        console.log(`screen is medium at ${screenWidth}px`)
+        character = allLevels.levelsMD[consoleName].find(c => c.name === characterName);
+    } else if(screenWidth > 576 && screenWidth <= 768) {
+        console.log(`screen is small at ${screenWidth}px`)
+        character = allLevels.levelsSM[consoleName].find(c => c.name === characterName);
+    } else if(screenWidth < 576) {
+        console.log(`screen is extra small at ${screenWidth}px`)
+        character = allLevels.levelsXS[consoleName].find(c => c.name === characterName);
+    }
+    //console.log(allLevels.levelsXXL)
 
     if (character && x >= character.xMin && x <= character.xMax && y >= character.yMin && y <= character.yMax) {
         res.json({ found: true, characterName });
